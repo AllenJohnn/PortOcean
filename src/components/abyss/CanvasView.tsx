@@ -7,6 +7,7 @@ import * as THREE from "three";
 
 import Ocean from "./Ocean";
 import Specimens from "./Specimens";
+import Creatures from "./Creatures";
 
 /**
  * R3F Canvas view for ABYSS background scene.
@@ -66,6 +67,7 @@ export default function CanvasView() {
         />
         <Ocean />
         <Specimens />
+        <Creatures />
       </Canvas>
     </div>
   );

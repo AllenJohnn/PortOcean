@@ -70,7 +70,7 @@ This document tracks the progress of the ABYSS portfolio rebuild across all phas
 ---
 
 ## Phase 4: Project Specimens (The Showpiece)
-- **Commit:** Pending
+- **Commit:** `49165dc`
 - **What Changed:**
   - Converted all 6 project images in `public/projects/` from uncompressed PNGs (~4 MB total) to resized WebP (max 1600px wide, ~98 KB total, a 97.5% reduction in asset weight).
   - Updated `DATA.projects` image paths in `src/data/resume.tsx` to `.webp` and removed the legacy PNGs.
@@ -88,5 +88,26 @@ This document tracks the progress of the ABYSS portfolio rebuild across all phas
   - Verified in deep water (Midnight & Abyssal zones): specimens stay appropriately darker until the submersible lamp is cast over them.
   - Verified on mobile (390px): clean responsive scaling, no horizontal overflow.
   - Passed `pnpm lint` and `pnpm build` with zero errors.
+- **Known Issues:**
+  - None.
+
+---
+
+## Phase 5: Life in the Water
+- **Commit:** Pending
+- **What Changed:**
+  - Built `FishSchool.tsx`: an instanced school of 36 small fish in Sunlight and Twilight zones (0–1200 m). Fish swim in natural flocking formation and actively scatter/flee when the submersible lamp draws near. 1 draw call.
+  - Built `jellyfishShader.ts` & `JellyfishDrift.tsx`: 3 translucent jellyfish in Twilight and Midnight zones (600–2600 m) with Fresnel translucency, pulsating bell contractions, and trailing bioluminescent tentacles.
+  - Built `AnglerGlow.tsx`: deep-sea anglerfish bioluminescent esca lure and dark silhouette in the Abyss zone (3000–3600 m) with organic breathing glow.
+  - Built `BubbleTrails.tsx`: instanced high-velocity bubble trails that spawn, wobble, and stream upward when scroll velocity is elevated.
+  - Built `SubmersibleBezel.tsx`: subtle submarine acrylic porthole framing with corner brackets and vignette edge shadow.
+  - Created `Creatures.tsx` container and mounted it in `CanvasView.tsx`.
+- **What Was Verified:**
+  - Verified in browser at 0m (fish swimming and scattering on lamp approach).
+  - Verified at 1500–2000m (translucent jellyfish pulsating in water column).
+  - Verified rapid scroll bubble trails.
+  - Verified in Abyss (pulsing anglerfish lure).
+  - Maintained 60fps performance on desktop and clean scaling at 390px mobile viewport.
+  - Passed `pnpm lint` and `pnpm build`.
 - **Known Issues:**
   - None.

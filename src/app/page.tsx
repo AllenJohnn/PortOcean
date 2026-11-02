@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import HeroName from "@/components/abyss/HeroName";
 import SkillsShoal from "@/components/abyss/SkillsShoal";
 import LampRevealController from "@/components/abyss/LampRevealController";
+import SubmersibleBezel from "@/components/abyss/SubmersibleBezel";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +34,9 @@ export default function Page() {
 
       {/* Global RAF lamp proximity controller */}
       <LampRevealController />
+
+      {/* Submersible viewport edge vignette and brackets */}
+      <SubmersibleBezel />
 
       {/* =========================================================
           1. SURFACE / SUNLIGHT ZONE (0–200 m): HERO
