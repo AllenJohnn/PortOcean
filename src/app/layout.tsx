@@ -1,29 +1,37 @@
 import Navbar from "@/components/navbar";
-import PageTransition from "@/components/page-transition";
-import ScrollProgress from "@/components/scroll-progress";
 import SmoothScrollProvider from "@/components/smooth-scroll-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Geist_Mono } from "next/font/google";
+import Scene from "@/components/abyss/Scene";
 import "./globals.css";
-import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["400", "500", "600", "700"],
+const clashDisplay = localFont({
+  src: "../../public/fonts/ClashDisplay-Semibold.ttf",
+  variable: "--font-clash",
+  display: "swap",
+  weight: "600",
+});
+
+const cabinetGrotesk = localFont({
+  src: "../../public/fonts/CabinetGrotesk-Medium.ttf",
+  variable: "--font-cabinet",
+  display: "swap",
+  weight: "500",
 });
 
 const geistMono = Geist_Mono({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-mono",
+  display: "swap",
 });
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID || "G-G7LNSPX49D";
@@ -66,10 +74,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#0f172a" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="theme-color" content="#02080e" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta
@@ -79,31 +87,19 @@ export default function RootLayout({
       </head>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased relative",
-          geist.variable,
+          "min-h-screen bg-[#02080e] text-[#e8fbff] font-sans antialiased relative selection:bg-[#5ff2e0]/20 selection:text-[#5ff2e0]",
+          clashDisplay.variable,
+          cabinetGrotesk.variable,
           geistMono.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
           <SmoothScrollProvider>
             <TooltipProvider delayDuration={0}>
-              <ScrollProgress />
-              <div className="hidden sm:absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0">
-                <FlickeringGrid
-                  className="h-full w-full"
-                  squareSize={2}
-                  gridGap={2}
-                  style={{
-                    maskImage: "linear-gradient(to bottom, black, transparent)",
-                    WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
-                  }}
-                />
+              <Scene />
+              <div className="relative z-10 w-full min-h-screen">
+                {children}
               </div>
-              <PageTransition>
-                <div className="relative z-10 max-w-2xl mx-auto py-12 pb-24 sm:py-24 px-6">
-                  {children}
-                </div>
-              </PageTransition>
               <Navbar />
             </TooltipProvider>
           </SmoothScrollProvider>

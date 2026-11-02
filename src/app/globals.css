@@ -5,6 +5,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
+  --font-sans: var(--font-cabinet), system-ui, sans-serif;
+  --font-display: var(--font-clash), var(--font-cabinet), sans-serif;
+  --font-mono: var(--font-mono), monospace;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -135,6 +138,7 @@ html.lenis body {
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-cabinet), system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
