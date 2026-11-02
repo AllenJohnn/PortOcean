@@ -258,4 +258,20 @@ html.lenis body {
   a:focus-visible, button:focus-visible, [role="link"]:focus-visible {
     @apply outline-none ring-2 ring-ring ring-offset-2 rounded-sm;
   }
+
+  .lamp-reveal {
+    opacity: var(--lamp-opacity, 1);
+    transition: opacity 0.15s ease-out;
+  }
+
+  .lamp-reveal:hover,
+  .lamp-reveal:focus-within {
+    opacity: 1 !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lamp-reveal {
+      opacity: 1 !important;
+    }
+  }
 }

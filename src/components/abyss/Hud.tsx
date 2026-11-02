@@ -21,11 +21,16 @@ const SPECIMEN_MARKERS = [
 /**
  * Fixed Submersible HUD gauge and vertical depth ruler.
  * Driven via direct DOM mutations in RAF loop to eliminate React re-renders while scrolling.
+ * Responsive design: Displays full telemetry on desktop bottom and clean top-strip on mobile
+ * to prevent any collision with the Dock navbar.
  */
 export default function Hud() {
   const depthTextRef = useRef<HTMLSpanElement>(null);
+  const depthMobileRef = useRef<HTMLSpanElement>(null);
   const tempTextRef = useRef<HTMLSpanElement>(null);
+  const tempMobileRef = useRef<HTMLSpanElement>(null);
   const pressureTextRef = useRef<HTMLSpanElement>(null);
+  const pressureMobileRef = useRef<HTMLSpanElement>(null);
   const rulerPipRef = useRef<HTMLDivElement>(null);
 
   const [activeZoneName, setActiveZoneName] = useState("Surface / Sunlight");
@@ -42,18 +47,17 @@ export default function Hud() {
       if (meters !== lastMeters) {
         lastMeters = meters;
 
-        if (depthTextRef.current) {
-          depthTextRef.current.textContent = `${meters.toLocaleString()} m`;
-        }
+        const strMeters = `${meters.toLocaleString()} m`;
+        if (depthTextRef.current) depthTextRef.current.textContent = strMeters;
+        if (depthMobileRef.current) depthMobileRef.current.textContent = strMeters;
 
-        if (tempTextRef.current) {
-          tempTextRef.current.textContent = `${progressToTemperature(p).toFixed(1)} °C`;
-        }
+        const strTemp = `${progressToTemperature(p).toFixed(1)} °C`;
+        if (tempTextRef.current) tempTextRef.current.textContent = strTemp;
+        if (tempMobileRef.current) tempMobileRef.current.textContent = strTemp;
 
-        if (pressureTextRef.current) {
-          const bar = (1 + meters / 10).toFixed(0);
-          pressureTextRef.current.textContent = `${bar} bar`;
-        }
+        const strPres = `${(1 + meters / 10).toFixed(0)} bar`;
+        if (pressureTextRef.current) pressureTextRef.current.textContent = strPres;
+        if (pressureMobileRef.current) pressureMobileRef.current.textContent = strPres;
 
         // Update vertical ruler pip position (0 to 100%)
         if (rulerPipRef.current) {
@@ -81,12 +85,36 @@ export default function Hud() {
       className="fixed inset-0 pointer-events-none z-30 select-none font-mono text-[11px] sm:text-xs tracking-[0.2em] text-[#5ff2e0]"
     >
       {/* Top telemetry bar */}
-      <header className="absolute top-0 left-0 right-0 px-6 sm:px-10 pt-4 sm:pt-6 flex justify-between items-center text-[#5ff2e0]/70">
-        <div className="flex items-center gap-2">
-          <span className="inline-block size-1.5 rounded-full bg-[#5ff2e0] animate-pulse" />
-          <span>ABYSS // SUBMERSIBLE TELEMETRY</span>
+      <header className="absolute top-0 left-0 right-0 px-4 sm:px-10 pt-3 sm:pt-6 flex flex-col sm:flex-row justify-between sm:items-center gap-1.5 text-[#5ff2e0]/70 bg-gradient-to-b from-[#02080e]/90 via-[#02080e]/40 to-transparent pb-3 sm:pb-0">
+        <div className="flex justify-between items-center w-full sm:w-auto">
+          <div className="flex items-center gap-2">
+            <span className="inline-block size-1.5 rounded-full bg-[#5ff2e0] animate-pulse" />
+            <span className="text-[10px] sm:text-xs tracking-[0.2em]">ABYSS // TELEMETRY</span>
+          </div>
+          {/* Mobile top-right zone badge */}
+          <span className="sm:hidden text-[10px] font-semibold text-[#5ff2e0] uppercase tracking-wider pr-6">
+            {activeZoneName.split("/")[0].trim()}
+          </span>
         </div>
-        <div className="hidden sm:block text-[#5ff2e0]/50">
+
+        {/* Mobile secondary telemetry row */}
+        <div className="sm:hidden flex items-center justify-between text-[10px] text-[#5ff2e0]/80 pr-10 pt-0.5">
+          <div>
+            <span className="text-[#5ff2e0]/50 mr-1.5">DEPTH</span>
+            <span ref={depthMobileRef} className="font-bold text-[#e8fbff] tabular-nums">0 m</span>
+          </div>
+          <div>
+            <span className="text-[#5ff2e0]/50 mr-1.5">PRES</span>
+            <span ref={pressureMobileRef} className="tabular-nums text-[#e8fbff]/90">1 bar</span>
+          </div>
+          <div>
+            <span className="text-[#5ff2e0]/50 mr-1.5">TEMP</span>
+            <span ref={tempMobileRef} className="tabular-nums text-[#5ff2e0]">24.0 °C</span>
+          </div>
+        </div>
+
+        {/* Desktop top-right telemetry */}
+        <div className="hidden sm:block text-[#5ff2e0]/50 text-xs tracking-[0.2em]">
           BEARING: 000° · PITCH: -90°
         </div>
       </header>
@@ -94,7 +122,7 @@ export default function Hud() {
       {/* Right vertical depth ruler */}
       <nav
         aria-label="Depth ruler"
-        className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 h-52 sm:h-72 w-8 sm:w-10 flex flex-col items-end justify-between"
+        className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 h-48 sm:h-72 w-7 sm:w-10 flex flex-col items-end justify-between"
       >
         <div className="relative h-full w-full flex justify-end">
           {/* Central ruler line */}
@@ -133,10 +161,10 @@ export default function Hud() {
         </div>
       </nav>
 
-      {/* Bottom gauge bar */}
-      <footer className="absolute bottom-0 left-0 right-0 px-6 sm:px-10 pb-4 sm:pb-6 flex justify-between items-end bg-gradient-to-t from-[#02080e]/80 to-transparent pt-8">
+      {/* Bottom gauge bar - displayed on sm (tablets/desktops) to keep mobile bottom 100% free for dock */}
+      <footer className="hidden sm:flex absolute bottom-0 left-0 right-0 px-6 sm:px-10 pb-3 sm:pb-6 justify-between items-end bg-gradient-to-t from-[#02080e]/90 via-[#02080e]/50 to-transparent pt-8">
         {/* Left Telemetry: Depth, Pressure, Water Temp */}
-        <div className="flex flex-col gap-1.5 z-10">
+        <div className="flex flex-col gap-1 z-10">
           <div className="flex items-center gap-3">
             <span className="text-[#5ff2e0]/50 text-[10px]">DEPTH</span>
             <span

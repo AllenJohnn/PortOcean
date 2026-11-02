@@ -4,11 +4,14 @@ import { Button } from "@/components/ui/button";
 import { DownloadIcon } from "lucide-react";
 import { sendGAEvent } from "@next/third-parties/google";
 
+import { cn } from "@/lib/utils";
+
 interface CvDownloadButtonProps {
   resumeUrl: string;
+  className?: string;
 }
 
-export default function CvDownloadButton({ resumeUrl }: CvDownloadButtonProps) {
+export default function CvDownloadButton({ resumeUrl, className }: CvDownloadButtonProps) {
   const handleDownload = () => {
     try {
       sendGAEvent("event", "file_download", {
@@ -16,7 +19,7 @@ export default function CvDownloadButton({ resumeUrl }: CvDownloadButtonProps) {
         file_extension: "pdf",
         link_url: resumeUrl,
       });
-    } catch (e) {
+    } catch {
       // analytics fallback
     }
   };
@@ -24,7 +27,10 @@ export default function CvDownloadButton({ resumeUrl }: CvDownloadButtonProps) {
   return (
     <Button
       asChild
-      className="h-11 sm:h-10 px-5 font-medium shadow-sm min-w-[44px] gap-2"
+      className={cn(
+        "h-11 sm:h-10 px-5 font-medium min-w-[44px] gap-2 border border-[#5ff2e0]/40 bg-[#021822]/60 backdrop-blur-md text-[#5ff2e0] hover:bg-[#5ff2e0]/20 hover:border-[#5ff2e0] shadow-[0_0_15px_rgba(95,242,224,0.15)] transition-all duration-200",
+        className
+      )}
       onClick={handleDownload}
     >
       <a
