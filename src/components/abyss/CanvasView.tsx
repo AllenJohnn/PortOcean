@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import * as THREE from "three";
 
 import Ocean from "./Ocean";
+import Specimens from "./Specimens";
 
 /**
  * R3F Canvas view for ABYSS background scene.
@@ -64,6 +65,7 @@ export default function CanvasView() {
           onIncline={() => setDpr(1.5)}
         />
         <Ocean />
+        <Specimens />
       </Canvas>
     </div>
   );

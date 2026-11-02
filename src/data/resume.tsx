@@ -98,7 +98,7 @@ export const DATA = {
           icon: <GlobeIcon className="size-3" />,
         },
       ],
-      image: "/projects/docshare.png",
+      image: "/projects/docshare.webp",
       video: "",
     },
     {
@@ -116,7 +116,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "/projects/spotify.png",
+      image: "/projects/spotify.webp",
       video: "",
     },
     {
@@ -134,7 +134,7 @@ export const DATA = {
           icon: <GlobeIcon className="size-3" />,
         },
       ],
-      image: "/projects/cineview.png",
+      image: "/projects/cineview.webp",
       imagePosition: "50% 30%",
       video: "",
     },
@@ -153,7 +153,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "/projects/pdftool.png",
+      image: "/projects/pdftool.webp",
       video: "",
     },
     {
@@ -176,7 +176,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "/projects/speedtest.png",
+      image: "/projects/speedtest.webp",
       video: "",
     },
     {
@@ -199,7 +199,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "/projects/qrtools.png",
+      image: "/projects/qrtools.webp",
       video: "",
     },
   ],

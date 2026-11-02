@@ -205,7 +205,7 @@ export default function Page() {
         </div>
 
         {/* 6 alternating specimen wrappers */}
-        <div className="flex flex-col gap-12 sm:gap-20 w-full">
+        <div className="flex flex-col gap-16 sm:gap-24 w-full">
           {DATA.projects.map((project, i) => {
             const isEven = i % 2 === 0;
             const depthM = SPECIMEN_DEPTHS[i];
@@ -216,51 +216,72 @@ export default function Page() {
                 data-specimen={i}
                 id={`specimen-${i}`}
                 className={cn(
-                  "specimen-wrapper relative min-h-[90vh] sm:min-h-[110vh] flex items-center",
+                  "specimen-wrapper relative min-h-[95vh] sm:min-h-[115vh] flex items-center w-full",
                   isEven ? "justify-start" : "justify-end"
                 )}
               >
-                <article className="lamp-reveal w-full max-w-lg p-8 sm:p-10 rounded-3xl border border-white/10 bg-[#02131d]/60 backdrop-blur-md shadow-2xl relative transition-all duration-300 hover:border-[#5ff2e0]/50 group">
-                  <div className="font-mono text-xs uppercase tracking-[0.25em] text-[#5ff2e0] mb-3 flex items-center gap-2">
-                    <span className="size-1.5 rounded-full bg-[#5ff2e0]" />
-                    SPECIMEN 0{i + 1} · {depthM.toLocaleString()} m
+                <div className="relative w-full max-w-lg sm:max-w-xl group">
+                  {/* Stable frame anchor for 3D WebGL textured plane */}
+                  <div
+                    id={`specimen-frame-${i}`}
+                    data-specimen-frame={i}
+                    className="specimen-frame relative w-full aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 bg-[#02131d]/40 backdrop-blur-xs shadow-2xl transition-all duration-500 group-hover:border-[#5ff2e0]/50 group-hover:scale-[1.015]"
+                  >
+                    {/* Entire specimen clickable link for keyboard and mouse access */}
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open project ${project.title}`}
+                      className="absolute inset-0 z-20 focus:outline-none focus:ring-2 focus:ring-[#5ff2e0] rounded-3xl cursor-pointer"
+                    />
+
+                    {/* DOM overlay card with glass look that fades in with lamp proximity or hover */}
+                    <article className="lamp-reveal pointer-events-none absolute inset-0 z-10 flex flex-col justify-end p-6 sm:p-8 bg-gradient-to-t from-[#020e17]/95 via-[#020e17]/50 to-transparent transition-opacity duration-300">
+                      <div className="pointer-events-auto">
+                        <div className="font-mono text-xs uppercase tracking-[0.25em] text-[#5ff2e0] mb-2 flex items-center gap-2">
+                          <span className="size-1.5 rounded-full bg-[#5ff2e0]" />
+                          SPECIMEN 0{i + 1} · {depthM.toLocaleString()} m
+                        </div>
+
+                        <h3 className="font-display text-2xl sm:text-3xl font-semibold text-[#e8fbff] mb-2 group-hover:text-[#5ff2e0] transition-colors">
+                          {project.title}
+                        </h3>
+
+                        <p className="text-xs sm:text-sm text-[#e8fbff]/85 leading-relaxed mb-4 font-light line-clamp-2 sm:line-clamp-3">
+                          {project.description}
+                        </p>
+
+                        {/* Technology badges */}
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {project.technologies.map((tech) => (
+                            <span
+                              key={tech}
+                              className="font-mono text-[10px] sm:text-[11px] px-2.5 py-0.5 rounded-full bg-[#5ff2e0]/10 text-[#5ff2e0] border border-[#5ff2e0]/20"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Real links from DATA */}
+                        <div className="relative z-30 flex items-center gap-5 text-xs sm:text-sm font-medium">
+                          {project.links.map((link) => (
+                            <a
+                              key={link.href}
+                              href={link.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 text-[#5ff2e0] hover:underline cursor-pointer"
+                            >
+                              {link.type} ↗
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    </article>
                   </div>
-
-                  <h3 className="font-display text-2xl sm:text-3xl font-semibold text-[#e8fbff] mb-3 group-hover:text-[#5ff2e0] transition-colors">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-sm sm:text-base text-[#e8fbff]/85 leading-relaxed mb-6 font-light">
-                    {project.description}
-                  </p>
-
-                  {/* Technology badges */}
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="font-mono text-[11px] px-2.5 py-1 rounded-full bg-[#5ff2e0]/10 text-[#5ff2e0] border border-[#5ff2e0]/20"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Real links from DATA */}
-                  <div className="flex items-center gap-5 text-sm font-medium">
-                    {project.links.map((link) => (
-                      <a
-                        key={link.href}
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-[#5ff2e0] hover:underline"
-                      >
-                        {link.type} ↗
-                      </a>
-                    ))}
-                  </div>
-                </article>
+                </div>
               </div>
             );
           })}
