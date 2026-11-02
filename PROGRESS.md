@@ -94,7 +94,7 @@ This document tracks the progress of the ABYSS portfolio rebuild across all phas
 ---
 
 ## Phase 5: Life in the Water
-- **Commit:** Pending
+- **Commit:** `9eb2180`
 - **What Changed:**
   - Built `FishSchool.tsx`: an instanced school of 36 small fish in Sunlight and Twilight zones (0–1200 m). Fish swim in natural flocking formation and actively scatter/flee when the submersible lamp draws near. 1 draw call.
   - Built `jellyfishShader.ts` & `JellyfishDrift.tsx`: 3 translucent jellyfish in Twilight and Midnight zones (600–2600 m) with Fresnel translucency, pulsating bell contractions, and trailing bioluminescent tentacles.
@@ -109,5 +109,39 @@ This document tracks the progress of the ABYSS portfolio rebuild across all phas
   - Verified in Abyss (pulsing anglerfish lure).
   - Maintained 60fps performance on desktop and clean scaling at 390px mobile viewport.
   - Passed `pnpm lint` and `pnpm build`.
+- **Known Issues:**
+  - None.
+
+---
+
+## Phase 6: Navigation, Intro & Polish
+- **Commit:** `2ca6d93`
+- **What Changed:**
+  - Replaced legacy `Navbar` dock with `DepthSounder.tsx`:
+    - Fixed acoustic submarine navigation sounder at bottom center.
+    - Displays active depth zone indicator and clickable depth pips (`0m`, `200m`, `450m`, `900m`, `1600m`, `3800m`).
+    - Smoothly scrolls the submersible to the target depth zone using Lenis with GSAP ScrollTrigger sync.
+    - Integrated direct actions for GitHub, LinkedIn, and Theme toggle in an oceanic glass pill.
+  - Built `IntroLoader.tsx`:
+    - Atmospheric "Descending to Surface..." submersible preloader.
+    - Preloads high-res WebP project specimen textures with real-time percentage readout.
+    - Sonar ping radar ring animation.
+    - Gracefully dismisses when assets are ready, unlocking the dive.
+    - Honors `prefers-reduced-motion` by immediately skipping the intro screen.
+  - Built `CustomCursor.tsx`:
+    - Subtle 32px cyan sonar ring cursor with central target dot for desktop viewports.
+    - Reactively tracks pointer coordinates with smooth CSS lerp variables.
+    - Expands and brightens when hovering interactive buttons, links, and project specimen cards.
+    - Hidden on touch devices or fine pointer absent environments.
+  - Redesigned `src/app/not-found.tsx`:
+    - Atmospheric oceanic Mariana Trench depth (10,928 m) error screen.
+    - Echoing sonar radar and "Ascend to Surface" return button.
+- **What Was Verified:**
+  - Verified `IntroLoader` runs, loads textures, and seamlessly reveals the hero view.
+  - Verified `DepthSounder` clicks jump smoothly to each depth zone (200m About, 450m Skills, 900m Education, 1600m Projects, 3800m Seabed).
+  - Verified Custom Cursor hover reaction on links and specimens.
+  - Verified Mariana Trench 404 page visually and confirmed the "Ascend to Surface" action routes back to home.
+  - Verified responsive presentation on 390px mobile viewport: compact sounder bar without overlap.
+  - Passed `pnpm lint` and `pnpm build` with zero errors.
 - **Known Issues:**
   - None.

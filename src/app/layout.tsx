@@ -1,4 +1,6 @@
-import Navbar from "@/components/navbar";
+import DepthSounder from "@/components/abyss/DepthSounder";
+import IntroLoader from "@/components/abyss/IntroLoader";
+import CustomCursor from "@/components/abyss/CustomCursor";
 import SmoothScrollProvider from "@/components/smooth-scroll-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -102,7 +104,9 @@ export default function RootLayout({
               <div className="relative z-10 w-full min-h-screen">
                 {children}
               </div>
-              <Navbar />
+              <DepthSounder />
+              <IntroLoader />
+              <CustomCursor />
             </TooltipProvider>
           </SmoothScrollProvider>
         </ThemeProvider>
