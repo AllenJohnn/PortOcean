@@ -5,9 +5,11 @@ import { PerformanceMonitor } from "@react-three/drei";
 import { useEffect, useState } from "react";
 import * as THREE from "three";
 
+import Ocean from "./Ocean";
+
 /**
  * R3F Canvas view for ABYSS background scene.
- * Renders dark teal clear color in Phase 1; handles DPR capping and visibility pausing.
+ * Houses Ocean shader quad; handles DPR capping and visibility pausing.
  */
 export default function CanvasView() {
   const [dpr, setDpr] = useState<number>(() => {
@@ -61,6 +63,7 @@ export default function CanvasView() {
           onDecline={() => setDpr(1)}
           onIncline={() => setDpr(1.5)}
         />
+        <Ocean />
       </Canvas>
     </div>
   );

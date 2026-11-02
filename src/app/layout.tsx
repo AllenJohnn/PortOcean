@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Geist_Mono } from "next/font/google";
 import Scene from "@/components/abyss/Scene";
+import Hud from "@/components/abyss/Hud";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -97,6 +98,7 @@ export default function RootLayout({
           <SmoothScrollProvider>
             <TooltipProvider delayDuration={0}>
               <Scene />
+              <Hud />
               <div className="relative z-10 w-full min-h-screen">
                 {children}
               </div>

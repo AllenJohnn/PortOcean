@@ -33,10 +33,10 @@ export default function Page() {
         <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#5ff2e0] mb-4">
           Surface · 0 m
         </span>
-        <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight text-[#e8fbff] leading-[1.05]">
+        <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight text-[#e8fbff] leading-[1.05] drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
           {DATA.name}
         </h1>
-        <p className="mt-4 text-lg sm:text-xl text-[#e8fbff]/80 max-w-2xl leading-relaxed">
+        <p className="mt-4 text-lg sm:text-xl text-[#e8fbff]/85 max-w-2xl leading-relaxed">
           {DATA.description}
         </p>
         <div className="flex flex-wrap items-center gap-4 mt-8">
@@ -44,7 +44,7 @@ export default function Page() {
           <Button
             asChild
             variant="outline"
-            className="h-11 px-5 border-[#5ff2e0]/30 hover:border-[#5ff2e0] hover:bg-[#5ff2e0]/10 text-[#5ff2e0] font-medium"
+            className="h-11 px-5 border-[#5ff2e0]/40 bg-[#020d14]/40 backdrop-blur-sm hover:border-[#5ff2e0] hover:bg-[#5ff2e0]/20 text-[#5ff2e0] font-medium"
           >
             <a
               href={DATA.contact.social.GitHub.url}
@@ -56,7 +56,7 @@ export default function Page() {
             </a>
           </Button>
         </div>
-        <p className="mt-12 font-mono text-xs uppercase tracking-[0.2em] text-[#5ff2e0]/70">
+        <p className="mt-12 font-mono text-xs uppercase tracking-[0.2em] text-[#5ff2e0] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
           Scroll to dive ↓
         </p>
       </section>
@@ -66,14 +66,16 @@ export default function Page() {
         id="about"
         className="min-h-screen flex flex-col justify-center px-6 sm:px-12 md:px-24 py-24 max-w-5xl mx-auto w-full"
       >
-        <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#5ff2e0] mb-4">
-          Depth · 150 m
-        </span>
-        <h2 className="font-display text-3xl sm:text-5xl font-semibold tracking-tight mb-6 text-[#e8fbff]">
-          About
-        </h2>
-        <div className="prose max-w-3xl text-[#e8fbff]/85 leading-relaxed text-base sm:text-lg">
-          <Markdown>{DATA.summary}</Markdown>
+        <div className="p-6 sm:p-8 rounded-2xl border border-white/10 bg-[#020d14]/40 backdrop-blur-md shadow-2xl max-w-3xl">
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#5ff2e0] mb-3 block">
+            Depth · 150 m
+          </span>
+          <h2 className="font-display text-3xl sm:text-5xl font-semibold tracking-tight mb-6 text-[#e8fbff]">
+            About
+          </h2>
+          <div className="prose max-w-none text-[#e8fbff]/90 leading-relaxed text-base sm:text-lg">
+            <Markdown>{DATA.summary}</Markdown>
+          </div>
         </div>
       </section>
 

@@ -24,12 +24,31 @@ export default function SmoothScrollProvider({
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    // Track pointer coords for the abyss lamp
+    // Track pointer and touch coords for the abyss lamp
     const handlePointerMove = (e: PointerEvent) => {
       abyssStore.lampTargetX = e.clientX / window.innerWidth;
       abyssStore.lampTargetY = 1 - e.clientY / window.innerHeight;
     };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        abyssStore.lampTargetX = touch.clientX / window.innerWidth;
+        abyssStore.lampTargetY = 1 - touch.clientY / window.innerHeight;
+      }
+    };
+
+    const handleResize = () => {
+      abyssStore.width = window.innerWidth;
+      abyssStore.height = window.innerHeight;
+      abyssStore.dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      ScrollTrigger.refresh();
+    };
+
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchstart", handleTouchMove, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
 
     let lenis: Lenis | null = null;
     let tickerCallback: ((time: number) => void) | null = null;
@@ -95,6 +114,9 @@ export default function SmoothScrollProvider({
 
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchstart", handleTouchMove);
+      window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animId);
       trigger.kill();
       if (tickerCallback) {
